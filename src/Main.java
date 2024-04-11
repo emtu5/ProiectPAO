@@ -18,5 +18,6 @@ public class Main {
 //        System.out.println(test4);
         Season no1 = SeasonService.addSeason("Season 1 - BUCHAREST", 1);
         SeasonService.addEntry(no1, "emtu Romania Fly Project - Mandala");
+        SeasonService.showEntriesInSeason(no1);
     }
 }

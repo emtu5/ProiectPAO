@@ -1,6 +1,6 @@
 package Model;
 
-public class Entry {
+public class Entry implements Comparable<Entry>{
     private User user;
     private Country country;
     private String song;
@@ -32,5 +32,15 @@ public class Entry {
 
     public void setSong(String song) {
         this.song = song;
+    }
+
+    @Override
+    public String toString() {
+        return STR."\{this.user.getUsername()} | \{this.country} | \{this.song}";
+    }
+
+    @Override
+    public int compareTo(Entry o) {
+        return this.country.compareTo(o.country);
     }
 }

@@ -3,6 +3,7 @@ package Service;
 import Model.Entry;
 import Model.Season;
 import Model.SeasonStatus;
+import Model.User;
 
 import java.util.ArrayList;
 
@@ -48,7 +49,22 @@ public class SeasonService {
         season.addEntry(e);
     }
 
+    public static void addAutoQualifiers(Season season, String[] aq) {
+        for (String pers: aq) {
+            User u = UserService.findUserByUsername(pers);
+            if (u != null) {
+                season.addAutoQualifier(u);
+            }
+        }
+    }
     public static ArrayList<Season> getSeasons() {
         return seasons;
+    }
+
+    public static void showEntriesInSeason (Season season) {
+        System.out.println(STR."\{season.getSeasonName()} Entries:");
+        for (Entry entry: season.getEntries()) {
+            System.out.println(entry);
+        }
     }
 }

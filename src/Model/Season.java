@@ -53,5 +53,11 @@ public class Season {
         this.autoQualifiers.add(u);
     }
 
+    public void endSignups() {
+        this.status = SeasonStatus.IN_PROGRESS;
+    }
 
+    public void endSeason() {
+        this.status = SeasonStatus.FINISHED;
+    }
 }
