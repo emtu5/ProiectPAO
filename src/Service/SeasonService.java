@@ -1,9 +1,6 @@
 package Service;
 
-import Model.Entry;
-import Model.Season;
-import Model.SeasonStatus;
-import Model.User;
+import Model.*;
 
 import java.util.ArrayList;
 
@@ -66,5 +63,16 @@ public class SeasonService {
         for (Entry entry: season.getEntries()) {
             System.out.println(entry);
         }
+    }
+
+    public static void addVote (Season season, String args) {
+        if (season.getStatus() != SeasonStatus.IN_PROGRESS) {
+            return;
+        }
+        Vote v = VoteService.addVote(args);
+        if (v == null) {
+            return;
+        }
+        season.addVote(v);
     }
 }

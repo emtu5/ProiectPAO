@@ -57,7 +57,16 @@ public class Season {
         this.status = SeasonStatus.IN_PROGRESS;
     }
 
-    public void endSeason() {
-        this.status = SeasonStatus.FINISHED;
+    public void nextSeason() {
+        currentShow++;
+        if (currentShow == shows.size()) {
+            this.status = SeasonStatus.FINISHED;
+        }
+    }
+
+    public void addVote(Vote vote) {
+        if (this.status == SeasonStatus.IN_PROGRESS) {
+            this.shows.get(currentShow).addVote(vote);
+        }
     }
 }
