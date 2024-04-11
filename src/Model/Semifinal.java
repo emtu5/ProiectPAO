@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Semifinal extends LiveShow{
     private int qualifiers;
@@ -12,6 +10,7 @@ public class Semifinal extends LiveShow{
 
     @Override
     public void results() {
-
+        //W.I.P
+        System.out.println("This is a semifinal!");
     }
 }

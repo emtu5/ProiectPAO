@@ -8,6 +8,7 @@ public class Final extends LiveShow {
 
     @Override
     public void results() {
-
+        //W.I.P
+        System.out.println("This is a final!");
     }
 }
