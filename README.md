@@ -19,7 +19,7 @@ Each user claims a country, then sends a song to represent that country. After t
 - [x] Find users/countries/seasons based on their name/id
 - [ ] Show information for a season
 - [ ] Sign-up users for a season
-- [ ] Submit entries to a season
+- [x] Submit entries to a season
 - [ ] Set up semifinals/finals (divide the participants into finalists and semifinalists)
 - [ ] Vote in a show
 - [ ] Calculate voting results

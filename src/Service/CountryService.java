@@ -28,4 +28,10 @@ public class CountryService {
         }
         return null;
     }
+
+    public static void showCountries() {
+        for (Country country : countries) {
+            System.out.println(country);
+        }
+    }
 }

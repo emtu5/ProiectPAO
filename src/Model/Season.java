@@ -36,6 +36,10 @@ public class Season {
         return autoQualifiers;
     }
 
+    public SeasonStatus getStatus() {
+        return status;
+    }
+
     public void setSeasonName(String seasonName) {
         this.seasonName = seasonName;
     }
@@ -48,4 +52,6 @@ public class Season {
     public void addAutoQualifier (User u) {
         this.autoQualifiers.add(u);
     }
+
+
 }
