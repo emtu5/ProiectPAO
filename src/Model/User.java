@@ -1,6 +1,6 @@
 package Model;
 
-public class User {
+public class User implements Comparable<User>{
     private String username;
     private String email;
     public User(String username, String email) {
@@ -27,5 +27,10 @@ public class User {
     @Override
     public String toString() {
         return STR."Username: \{this.username} | email: \{this.email}";
+    }
+
+    @Override
+    public int compareTo(User o) {
+        return this.username.compareTo(o.username);
     }
 }

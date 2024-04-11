@@ -1,6 +1,6 @@
 package Model;
 
-public class Country {
+public class Country implements Comparable<Country>{
     private String name;
 
     public Country(String name) {
@@ -18,5 +18,10 @@ public class Country {
     @Override
     public String toString() {
         return this.name;
+    }
+
+    @Override
+    public int compareTo(Country o) {
+        return this.name.compareTo(o.name);
     }
 }

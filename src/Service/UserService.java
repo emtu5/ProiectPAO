@@ -3,18 +3,20 @@ package Service;
 import Model.User;
 
 import java.util.ArrayList;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class UserService {
-    private static final ArrayList<User> users = new ArrayList<>();
+    private static final SortedSet<User> users = new TreeSet<>();
 
     private UserService(){}
 
     public static User addUser(String username, String email) {
-        for (User user: users) {
-            if (user.getUsername().equals(username)) {
-                return null;
-            }
-        }
+//        for (User user: users) {
+//            if (user.getUsername().equals(username)) {
+//                return null;
+//            }
+//        }
         User user = new User(username, email);
         users.add(user);
         return user;
@@ -29,7 +31,7 @@ public class UserService {
         return null;
     }
 
-    public static ArrayList<User> getUsers() {
+    public static SortedSet<User> getUsers() {
         return users;
     }
 
