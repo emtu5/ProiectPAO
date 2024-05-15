@@ -2,8 +2,8 @@ package Model;
 
 public class Final extends LiveShow {
 
-    public Final(String showName) {
-        super(showName);
+    public Final(String showName, VotingSystem votingSystem) {
+        super(showName, votingSystem);
     }
 
     @Override

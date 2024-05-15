@@ -1,5 +1,19 @@
 package Model;
 
-public enum VotingSystem {
-    top10_12_1, top7_12_1, top5_5_1
+import java.util.ArrayList;
+
+public class VotingSystem {
+    private ArrayList<Integer> points;
+    public VotingSystem() {
+        points = new ArrayList<>();
+    }
+
+    public ArrayList<Integer> getPoints() {
+        return points;
+    }
+
+    @Override
+    public String toString() {
+        return points.toString();
+    }
 }

@@ -4,6 +4,12 @@ public class Entry implements Comparable<Entry>{
     private User user;
     private Country country;
     private String song;
+
+    public Entry(User user, Country country) {
+        this.user = user;
+        this.country = country;
+        this.song = "";
+    }
     public Entry(User user, Country country, String song) {
         this.user = user;
         this.country = country;

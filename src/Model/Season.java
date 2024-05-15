@@ -9,9 +9,7 @@ public class Season {
     private ArrayList<Entry> entries = new ArrayList<>();
     //a list of semifinals and a final
     private ArrayList<LiveShow> shows = new ArrayList<>();
-    private ArrayList<User> autoQualifiers = new ArrayList<>();
     private SeasonStatus status = SeasonStatus.SIGNUPS;
-    // the show it's currently at in that list
     private int currentShow = 0;
 
     public Season(String seasonName) {
@@ -40,10 +38,6 @@ public class Season {
         return status;
     }
 
-    public void setSeasonName(String seasonName) {
-        this.seasonName = seasonName;
-    }
-
     public void addEntry (Entry e) {
         this.entries.add(e);
     }
@@ -53,11 +47,7 @@ public class Season {
         this.autoQualifiers.add(u);
     }
 
-    public void endSignups() {
-        this.status = SeasonStatus.IN_PROGRESS;
-    }
-
-    public void nextSeason() {
+    public void advanceSeason() {
         currentShow++;
         if (currentShow == shows.size()) {
             this.status = SeasonStatus.FINISHED;
