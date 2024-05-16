@@ -59,7 +59,7 @@ public class ContestRunner {
                 11. Add vote to current show
                 12. Display all seasons
                 """);
-        int option = scanner.nextInt();
+        int option = Integer.parseInt(scanner.nextLine());
         switch (option) {
             case 0 -> System.exit(0);
             case 1-> addUser();
@@ -143,6 +143,7 @@ public class ContestRunner {
 
         Season season = new Season(seasonName, shows, votingSystemSemifinal, votingSystemFinal,
                 autoqualifiers, qualifiersSemi);
+        seasonService.selectCurrentSeason(season.getSeasonId());
         seasonService.addSeason(season);
     }
 
