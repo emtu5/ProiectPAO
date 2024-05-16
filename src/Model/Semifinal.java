@@ -31,7 +31,7 @@ public class Semifinal extends LiveShow{
     public void displayshow() {
         System.out.println(STR."\{showName} - Number of qualifiers: \{qualifiers} out of \{score.size()}");
         for (Entry e : score.keySet()) {
-            System.out.println(STR."\{e} - \{score.get(e)}");
+            System.out.println(STR."\{e} - \{score.get(e) != -1 ? score.get(e) : "N/A"}");
         }
     }
 }
