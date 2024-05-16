@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Season {
     private final int seasonId;
-    private static int latestSeasonId = 1;
+    private static int latestSeasonId = 0;
     private String seasonName;
     private ArrayList<Entry> entries = new ArrayList<>();
     //a list of semifinals and a final
@@ -56,6 +56,7 @@ public class Season {
     public void advanceSeason() {
         currentShow++;
         if (currentShow == shows.size()) {
+            currentShow--;
             this.status = SeasonStatus.FINISHED;
         }
     }
@@ -100,5 +101,9 @@ public class Season {
         if (show < shows.size() && show >= 0) {
             shows.get(show).addVote(vote);
         }
+    }
+
+    public void setStatus(SeasonStatus seasonStatus) {
+        this.status = seasonStatus;
     }
 }

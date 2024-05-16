@@ -58,7 +58,7 @@ public class SeasonService {
                     semi_index++;
                 }
             }
-
+            currentSeason.setStatus(SeasonStatus.IN_PROGRESS);
         }
         else if (currentSeason.getStatus() == SeasonStatus.IN_PROGRESS) {
             int currentShow = currentSeason.getCurrentShow();
@@ -87,6 +87,10 @@ public class SeasonService {
 
     public void displayEntriesInShow() {
         Season currentSeason = seasonRepository.getSeasonById(currentSeasonId);
+        if (currentSeason.getStatus() == SeasonStatus.SIGNUPS) {
+            System.out.println("No live show has started!");
+            return;
+        }
         int currentShow = currentSeason.getCurrentShow();
         LiveShow show = currentSeason.getShows().get(currentShow);
         show.displayshow();
@@ -94,6 +98,11 @@ public class SeasonService {
 
     public void addVote (Vote vote) {
         Season currentSeason = seasonRepository.getSeasonById(currentSeasonId);
+        if (currentSeason.getStatus() != SeasonStatus.IN_PROGRESS) {
+            System.out.println("Voting is not open!");
+            return;
+        }
+
         currentSeason.addVote(vote);
         seasonRepository.updateSeason(currentSeason, currentSeasonId);
     }

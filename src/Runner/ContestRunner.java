@@ -51,8 +51,8 @@ public class ContestRunner {
                 3. Display all users
                 4. Start season
                 5. Select current season
-                6. Add user to current season
-                7. Add entry to current season
+                6. Add user to current season (username, country, song - optional)
+                7. Add song to participant (users who haven't submitted a song)
                 8. Advance current season
                 9. Display all current entries from season
                 10. Display all current entries from show

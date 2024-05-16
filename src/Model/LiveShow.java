@@ -11,6 +11,7 @@ public abstract class LiveShow {
     protected LiveShow(String showName, VotingSystem votingSystem) {
         this.showName = showName;
         this.votingSystem = votingSystem;
+        this.votes = new ArrayList<>();
     }
 
     public void addEntry(Entry entry) {
@@ -27,9 +28,7 @@ public abstract class LiveShow {
         }
         Map<Country, Integer> temp = new HashMap<>();
         for (Entry e : score.keySet()) {
-            if (users_voted.contains(e.getUser())) {
-                temp.put(e.getCountry(), 0);
-            }
+            temp.put(e.getCountry(),  0);
         }
         // add the points from each vote
         ArrayList<Integer> points = votingSystem.getPoints();
@@ -38,12 +37,16 @@ public abstract class LiveShow {
         for (Vote v : votes) {
             ArrayList<Country> countries = v.getCountries();
             i = 0;
-            for (Country c : temp.keySet()) {
+            for (Country c : countries) {
                 temp.put(c, temp.get(c) + points.get(i));
                 i++;
             }
         }
-
+        for (Entry e : score.keySet()) {
+            if (!users_voted.contains(e.getUser())) {
+                temp.put(e.getCountry(), -1);
+            }
+        }
         score.replaceAll((e, v) -> temp.getOrDefault(e.getCountry(), -1));
 
     }
