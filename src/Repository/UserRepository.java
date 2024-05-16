@@ -7,7 +7,11 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class UserRepository implements IUserRepository {
-    private static final SortedSet<User> users = new TreeSet<>();
+    private final SortedSet<User> users;
+
+    public UserRepository() {
+        this.users = new TreeSet<>();
+    }
 
     public void addUser(User user) {
         users.add(user);
@@ -24,7 +28,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public ArrayList<User> getUsers() {
-        return null;
+    public SortedSet<User> getUsers() {
+        return users;
     }
 }
