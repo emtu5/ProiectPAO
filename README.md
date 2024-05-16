@@ -9,19 +9,23 @@ Each user claims a country, then sends a song to represent that country. After t
 - [x] Country
 - [x] Entry
 - [x] Season
-- [ ] LiveShow (W.I.P)
-    - [ ] Semifinal (W.I.P)
-    - [ ] Final (W.I.P)
-- [x] Vote (W.I.P)
+- [x] SeasonStatus (enum)
+- [x] LiveShow
+    - [x] Semifinal
+    - [x] Final
+- [x] Vote
+- [x] VotingSystem
     
-## Interrogations (Stage 1 WIP)
-- [x] Create users/countries/seasons
-- [x] Find users/countries/seasons based on their name/id
-- [x] Show entries for a season
-- [x] Sign-up users for a season
-- [x] Submit entries to a season
-- [ ] Set up semifinals/finals (divide the participants into finalists and semifinalists)
-- [ ] Vote in a show (W.I.P)
-- [ ] Calculate voting results
-- [ ] Determine qualifiers from semifinal results
-- [ ] Display results of participants in descending order
+## Interrogations (Stage 1)
+- [x] Add users to the contest
+- [x] Remove users from the contest
+- [x] Display all users
+- [x] Start season
+- [x] Select current season
+- [x] Add user to current season
+- [x] Add entry to current season
+- [x] Advance current season
+- [x] Display all current entries from season
+- [x] Display all current entries from show
+- [x] Add vote to current show
+- [x] Display all seasons
