@@ -6,4 +6,12 @@ public class Final extends LiveShow {
         super(showName, votingSystem);
     }
 
+    @Override
+    public void displayshow() {
+        System.out.println(STR."\{showName} - Number of entries: \{score.size()}");
+        for (Entry e : score.keySet()) {
+            System.out.println(STR."\{e} - \{score.get(e)}");
+        }
+    }
+
 }

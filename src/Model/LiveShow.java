@@ -48,6 +48,5 @@ public abstract class LiveShow {
 
     }
 
-    public void displayshow() {
-    }
+    public abstract void displayshow();
 }
