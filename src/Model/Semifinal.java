@@ -29,9 +29,9 @@ public class Semifinal extends LiveShow{
 
     @Override
     public void displayshow() {
-        System.out.println(STR."\{showName} - Number of qualifiers: \{qualifiers} out of \{score.size()}");
+        System.out.println(showName + " - Number of qualifiers: " + qualifiers + " out of " + score.size());
         for (Entry e : score.keySet()) {
-            System.out.println(STR."\{e} - \{score.get(e) != -1 ? score.get(e) : "N/A"}");
+            System.out.println(e + " - " + (score.get(e) != -1 ? score.get(e) : "N/A"));
         }
     }
 }

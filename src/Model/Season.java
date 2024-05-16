@@ -24,7 +24,7 @@ public class Season {
         this.votingSystemSemifinals = semi;
         this.votingSystemFinal = _final;
         for (int i = 0; i < shows - 1; i++) {
-            this.shows.add(new Semifinal(STR."Semifinal \{i + 1}", semi, qualifiers));
+            this.shows.add(new Semifinal("Semifinal" + (i + 1), semi, qualifiers));
         }
         this.shows.add(new Final("Final", _final));
     }
@@ -69,7 +69,8 @@ public class Season {
 
     @Override
     public String toString() {
-        return STR."Season \{this.seasonId} | \{this.seasonName} | No. of participants: \{this.entries.size()}";
+        return "Season " + this.seasonId + " | " + this.seasonName + " | " +
+                "No. of participants: " + this.entries.size();
     }
 
     public void addSong(User user, String song) {

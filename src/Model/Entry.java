@@ -42,7 +42,7 @@ public class Entry implements Comparable<Entry>{
 
     @Override
     public String toString() {
-        return STR."\{this.user.getUsername()} | \{this.country} | \{this.song}";
+        return this.user.getUsername() + " | " + this.country + " | " + this.song;
     }
 
     @Override

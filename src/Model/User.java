@@ -28,7 +28,7 @@ public class User implements Comparable<User>{
 
     @Override
     public String toString() {
-        return STR."Username: \{this.username} | email: \{this.email}";
+        return "Username: " + this.username + " | email: " + this.email;
     }
 
     @Override
