@@ -4,6 +4,7 @@ import Model.Entry;
 
 import java.util.ArrayList;
 
+
 public class EntryRepository implements IEntryRepository {
     private final ArrayList<Entry> entries;
 
