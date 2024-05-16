@@ -8,7 +8,8 @@ public class AuditLogService {
     public void log(String action) {
         try {
             FileWriter writer = new FileWriter(filename, true);
-            writer.append(STR."\{LocalDateTime.now()},\{action}\n");
+            String text = LocalDateTime.now() + "," + action + "\n";
+            writer.append(text);
             writer.close();
         } catch (Exception e) {
             System.out.println("Error while writing to file");
