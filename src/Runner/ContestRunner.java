@@ -16,13 +16,14 @@ public class ContestRunner {
     private final CountryService countryService;
     private final EntryService entryService;
     private final SeasonService seasonService;
-
+    private final AuditLogService auditLogService;
     private final Scanner scanner;
     public ContestRunner() {
         this.userService = new UserService();
         this.countryService = new CountryService();
         this.entryService = new EntryService();
         this.seasonService = new SeasonService();
+        this.auditLogService = new AuditLogService();
         this.scanner = new Scanner(System.in);
     }
 
@@ -78,6 +79,7 @@ public class ContestRunner {
     }
 
     private void addUser() {
+        auditLogService.log("addUser");
         System.out.println("Enter username:");
         String username = scanner.nextLine();
         System.out.println("Enter email:");
@@ -87,6 +89,7 @@ public class ContestRunner {
     }
 
     private void removeUser() {
+        auditLogService.log("removeUser");
         System.out.println("Enter username:");
         String username = scanner.nextLine();
         User user = userService.findUserByUsername(username);
@@ -98,6 +101,7 @@ public class ContestRunner {
     }
 
     private void displayUsers() {
+        auditLogService.log("displayUsers");
         SortedSet<User> users = userService.getUsers();
         for (User user: users) {
             System.out.println(user);
@@ -105,6 +109,7 @@ public class ContestRunner {
     }
 
     private void startSeason() {
+        auditLogService.log("startSeason");
         System.out.println("Enter season name:");
         String seasonName = scanner.nextLine();
         System.out.println("Enter number of shows (minimum 1, a final):");
@@ -142,12 +147,14 @@ public class ContestRunner {
     }
 
     private void selectCurrentSeason() {
+        auditLogService.log("selectCurrentSeason");
         System.out.println("Enter season id:");
         int seasonId = Integer.parseInt(scanner.nextLine());
         seasonService.selectCurrentSeason(seasonId);
     }
 
     private void addUserToCurrentSeason() {
+        auditLogService.log("addUserToCurrentSeason");
         System.out.println("Enter username, country and song (optional) separated by comma");
         String[] usercountry = scanner.nextLine().split(",");
         if (usercountry.length != 2 && usercountry.length != 3) {
@@ -174,6 +181,7 @@ public class ContestRunner {
     }
 
     private void addEntryToCurrentSeason() {
+        auditLogService.log("addEntryToCurrentSeason");
         System.out.println("Enter user and song separated by comma");
         String[] usersong = scanner.nextLine().split(",");
         if (usersong.length != 2) {
@@ -189,18 +197,22 @@ public class ContestRunner {
     }
 
     private void advanceCurrentSeason() {
+        auditLogService.log("advanceCurrentSeason");
         seasonService.advanceSeason();
     }
 
     private void displayCurrentEntriesFromSeason() {
+        auditLogService.log("displayCurrentEntriesFromSeason");
         seasonService.displayEntriesInSeason();
     }
 
     private void displayCurrentEntriesFromShow() {
+        auditLogService.log("displayCurrentEntriesFromShow");
         seasonService.displayEntriesInShow();
     }
 
     private void addVoteToCurrentShow() {
+        auditLogService.log("addVoteToCurrentShow");
         System.out.println("Enter vote details (user and countries separated by comma)");
         String[] votes = scanner.nextLine().split(",");
         User user = userService.findUserByUsername(votes[0]);
@@ -222,6 +234,7 @@ public class ContestRunner {
     }
 
     private void displayAllSeasons() {
+        auditLogService.log("displayAllSeasons");
         ArrayList<Season> seasons = seasonService.getSeasons();
         for (Season season: seasons) {
             System.out.println(season);
