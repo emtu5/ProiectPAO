@@ -1,41 +1,36 @@
 package Service;
 
 import Model.User;
+import Repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class UserService {
-    private static final SortedSet<User> users = new TreeSet<>();
+    private final UserRepository userRepository;
 
-    private UserService(){}
-
-    public static User addUser(String username, String email) {
-//        for (User user: users) {
-//            if (user.getUsername().equals(username)) {
-//                return null;
-//            }
-//        }
-        User user = new User(username, email);
-        users.add(user);
-        return user;
+    public UserService(){
+        this.userRepository = new UserRepository();
     }
 
-    public static User findUserByUsername(String username) {
-        for (User user: users) {
-            if (user.getUsername().equals(username)) {
-                return user;
-            }
-        }
-        return null;
+    public void addUser(User user) {
+        userRepository.addUser(user);
     }
 
-    public static SortedSet<User> getUsers() {
-        return users;
+    public void removeUser(User user) {
+        userRepository.removeUser(user);
+    }
+    public User findUserByUsername(String username) {
+        return userRepository.getUserByUsername(username);
     }
 
-    public static void showUsers() {
+    public SortedSet<User> getUsers() {
+        return userRepository.getUsers();
+    }
+
+    public void showUsers() {
+        SortedSet<User> users = this.getUsers();
         for (User user: users) {
             System.out.println(user);
         }

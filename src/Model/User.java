@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Objects;
+
 public class User implements Comparable<User>{
     private String username;
     private String email;
@@ -32,5 +34,10 @@ public class User implements Comparable<User>{
     @Override
     public int compareTo(User o) {
         return this.username.compareTo(o.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, email);
     }
 }
