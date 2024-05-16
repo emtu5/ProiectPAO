@@ -47,4 +47,7 @@ public abstract class LiveShow {
         score.replaceAll((e, v) -> temp.getOrDefault(e.getCountry(), -1));
 
     }
+
+    public void displayshow() {
+    }
 }

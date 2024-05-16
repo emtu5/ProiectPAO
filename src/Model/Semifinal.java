@@ -26,9 +26,4 @@ public class Semifinal extends LiveShow{
         }
         return result;
     }
-    @Override
-    public void results() {
-        //W.I.P
-        System.out.println("This is a semifinal!");
-    }
 }
