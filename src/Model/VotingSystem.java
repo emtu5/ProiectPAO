@@ -3,9 +3,9 @@ package Model;
 import java.util.ArrayList;
 
 public class VotingSystem {
-    private ArrayList<Integer> points;
-    public VotingSystem() {
-        points = new ArrayList<>();
+    private final ArrayList<Integer> points;
+    public VotingSystem(ArrayList<Integer> points) {
+        this.points = points;
     }
 
     public ArrayList<Integer> getPoints() {

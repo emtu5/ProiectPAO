@@ -1,13 +1,9 @@
 package Model;
 
-import java.util.ArrayList;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 public abstract class LiveShow {
     protected String showName;
-    // to decide running order
-    protected ArrayList<Entry> entries;
     protected SortedMap<Entry, Integer> score = new TreeMap<>();
     protected ArrayList<Vote> votes;
     protected VotingSystem votingSystem;
@@ -25,22 +21,30 @@ public abstract class LiveShow {
     }
     public void results() {
         // check who hasn't voted (they are disqualified and their score is -1)
+        Set<User> users_voted = new HashSet<>();
         for (Vote v : votes) {
-            score.put(v.getUser(), 0);
+            users_voted.add(v.getUser());
+        }
+        Map<Country, Integer> temp = new HashMap<>();
+        for (Entry e : score.keySet()) {
+            if (users_voted.contains(e.getUser())) {
+                temp.put(e.getCountry(), 0);
+            }
         }
         // add the points from each vote
         ArrayList<Integer> points = votingSystem.getPoints();
+
         int i = 0;
         for (Vote v : votes) {
             ArrayList<Country> countries = v.getCountries();
-            for (Entry e : score.keySet()) {
-                if (e.getCountry().equals(countries.get(i))) {
-                    score.put(e, score.get(e) + points.get(i));
-                    i++;
-                    break;
-                }
+            i = 0;
+            for (Country c : temp.keySet()) {
+                temp.put(c, temp.get(c) + points.get(i));
+                i++;
             }
         }
+
+        score.replaceAll((e, v) -> temp.getOrDefault(e.getCountry(), -1));
+
     }
-    public abstract void running_order_shuffle();
 }

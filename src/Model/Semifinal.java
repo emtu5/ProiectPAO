@@ -2,6 +2,8 @@ package Model;
 
 
 import java.util.ArrayList;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 
 public class Semifinal extends LiveShow{
     private int qualifiers;
@@ -11,7 +13,18 @@ public class Semifinal extends LiveShow{
     }
 
     public ArrayList<Entry> getQualifiers() {
-        return null;
+        ArrayList<Entry> result = new ArrayList<>();
+        TreeMap<Integer, Entry> sorted = new TreeMap<>();
+        for (Entry e : score.keySet()) {
+            sorted.put(score.get(e), e);
+        }
+        NavigableMap<Integer, Entry> reversed = sorted.descendingMap();
+        for (int i = 0; i < qualifiers; i++) {
+            Entry e = reversed.get(reversed.firstKey());
+            result.add(e);
+            reversed.remove(reversed.firstKey());
+        }
+        return result;
     }
     @Override
     public void results() {
