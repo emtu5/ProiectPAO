@@ -29,3 +29,7 @@ Each user claims a country, then sends a song to represent that country. After t
 - [x] Display all current entries from show
 - [x] Add vote to current show
 - [x] Display all seasons
+
+## Stage 2
+- [] add JDBC functionality
+- [X] add audit log
