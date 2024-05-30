@@ -21,6 +21,8 @@ public class Season {
         this.seasonId = latestSeasonId;
         latestSeasonId++;
         this.seasonName = seasonName;
+        this.autoQualifiers = autoqualifiers;
+        this.qualifiers = qualifiers;
         this.votingSystemSemifinals = semi;
         this.votingSystemFinal = _final;
         for (int i = 0; i < shows - 1; i++) {
