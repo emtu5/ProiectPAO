@@ -3,15 +3,53 @@ package Repository;
 import Model.Country;
 import Model.User;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class CountryRepository implements ICountryRepository {
+    public CountryRepository() {
+        addCountriesFromFile();
+    }
+
+    private void addCountriesFromFile() {
+        Connection conn = null;
+        PreparedStatement countryStmt = null;
+        try {
+            conn = DbConstants.getConnection();
+            String insertCountry = "INSERT INTO Country(name) VALUES(?);";
+            countryStmt = conn.prepareStatement(insertCountry);
+
+            File countries = new File("countries.txt");
+            Scanner fileScanner = new Scanner(countries);
+            while (fileScanner.hasNextLine()) {
+                String country = fileScanner.nextLine();
+                countryStmt.setString(1, country);
+                countryStmt.executeUpdate();
+            }
+            fileScanner.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                assert countryStmt != null;
+                countryStmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public void addCountry(Country country) {
         Connection conn = null;

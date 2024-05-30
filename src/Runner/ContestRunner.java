@@ -29,15 +29,7 @@ public class ContestRunner {
         this.scanner = new Scanner(System.in);
     }
 
-    public void run() throws FileNotFoundException {
-        File countries = new File("countries.txt");
-        Scanner fileScanner = new Scanner(countries);
-        while (fileScanner.hasNextLine()) {
-            String country = fileScanner.nextLine();
-            Country c = new Country(country);
-            countryService.addCountry(c);
-        }
-        fileScanner.close();
+    public void run() {
         while (true) {
             displayMenu();
         }

@@ -3,13 +3,54 @@ package Repository;
 import Model.User;
 import Model.VotingSystem;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 public class VotingSystemRepository implements IVotingSystemRepository {
+    public VotingSystemRepository () {
+        addVotingSystemsFromFile();
+    }
+
+    private void addVotingSystemsFromFile() {
+        Connection conn = null;
+        PreparedStatement votingSystemStmt = null;
+        try {
+            conn = DbConstants.getConnection();
+            String insertVotingSystem = "INSERT INTO VotingSystem(name, points) VALUES(?, ?);";
+            votingSystemStmt = conn.prepareStatement(insertVotingSystem);
+
+            File countries = new File("votingsystems.txt");
+            Scanner fileScanner = new Scanner(countries);
+            while (fileScanner.hasNextLine()) {
+                String name = fileScanner.nextLine();
+                String[] pointTotals = fileScanner.nextLine().split(",");
+                ArrayList<Integer> votingSystemPoints = new ArrayList<>();
+                for (String s : pointTotals) {
+                    votingSystemPoints.add(Integer.parseInt(s));
+                }
+                Array points = conn.createArrayOf("INTEGER", votingSystemPoints.toArray());
+                votingSystemStmt.setString(1, name);
+                votingSystemStmt.setArray(2, points);
+                votingSystemStmt.executeUpdate();
+            }
+            fileScanner.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                assert votingSystemStmt != null;
+                votingSystemStmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public void addVotingSystem(VotingSystem votingSystem) {
         Connection conn = null;
