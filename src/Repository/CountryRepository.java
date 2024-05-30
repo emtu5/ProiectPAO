@@ -1,35 +1,160 @@
 package Repository;
 
 import Model.Country;
+import Model.User;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class CountryRepository implements ICountryRepository {
-    private final SortedSet<Country> countries;
-
     public CountryRepository() {
-        this.countries = new TreeSet<>();
+        addCountriesFromFile();
     }
+
+    private void addCountriesFromFile() {
+        Connection conn = null;
+        PreparedStatement countryStmt = null;
+        try {
+            conn = DbConstants.getConnection();
+            String insertCountry = "INSERT INTO Country(name) VALUES(?);";
+            countryStmt = conn.prepareStatement(insertCountry);
+
+            File countries = new File("countries.txt");
+            Scanner fileScanner = new Scanner(countries);
+            while (fileScanner.hasNextLine()) {
+                String country = fileScanner.nextLine();
+                countryStmt.setString(1, country);
+                countryStmt.executeUpdate();
+            }
+            fileScanner.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                assert countryStmt != null;
+                countryStmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public void addCountry(Country country) {
-        countries.add(country);
+        Connection conn = null;
+        PreparedStatement countryStmt = null;
+        try {
+            conn = DbConstants.getConnection();
+            String insertCountry = "INSERT INTO Country(name) VALUES(?);";
+            countryStmt = conn.prepareStatement(insertCountry);
+            countryStmt.setString(1, country.getName());
+            countryStmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                assert countryStmt != null;
+                countryStmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void removeCountry(Country country) {
-        countries.remove(country);
+        Connection conn = null;
+        PreparedStatement countryStmt = null;
+        try {
+            conn = DbConstants.getConnection();
+            String removeCountry = "DELETE FROM Country WHERE name = ?;";
+            countryStmt = conn.prepareStatement(removeCountry);
+            countryStmt.setString(1, country.getName());
+            countryStmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                assert countryStmt != null;
+                countryStmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public Country getCountryByName(String name) {
-        return countries.stream().filter(country -> country.getName().equals(name)).findFirst().orElse(null);
+        Connection conn = null;
+        PreparedStatement countryStmt = null;
+        ResultSet rs = null;
+        try {
+            conn = DbConstants.getConnection();
+            String findCountry = "SELECT * FROM Country WHERE name = ?;";
+            countryStmt = conn.prepareStatement(findCountry);
+            countryStmt.setString(1, name);
+            rs = countryStmt.executeQuery();
+            if (rs.next()) {
+                return new Country(rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                assert rs != null;
+                rs.close();
+                countryStmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
 
     @Override
     public SortedSet<Country> getCountries() {
+        Connection conn = null;
+        PreparedStatement countryStmt = null;
+        ResultSet rs = null;
+        try {
+            conn = DbConstants.getConnection();
+            String findCountries = "SELECT * FROM Country;";
+            countryStmt = conn.prepareStatement(findCountries);
+            rs = countryStmt.executeQuery();
+            SortedSet<Country> countries = new TreeSet<Country>();
+            while (rs.next()) {
+                Country country = new Country(rs.getString("name"));
+                countries.add(country);
+            }
+            return countries;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                assert rs != null;
+                rs.close();
+                countryStmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return null;
     }
 }

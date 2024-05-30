@@ -17,6 +17,7 @@ public class ContestRunner {
     private final EntryService entryService;
     private final SeasonService seasonService;
     private final AuditLogService auditLogService;
+    private final VotingSystemService votingSystemService;
     private final Scanner scanner;
     public ContestRunner() {
         this.userService = new UserService();
@@ -24,18 +25,11 @@ public class ContestRunner {
         this.entryService = new EntryService();
         this.seasonService = new SeasonService();
         this.auditLogService = new AuditLogService();
+        this.votingSystemService = new VotingSystemService();
         this.scanner = new Scanner(System.in);
     }
 
-    public void run() throws FileNotFoundException {
-        File countries = new File("countries.txt");
-        Scanner fileScanner = new Scanner(countries);
-        while (fileScanner.hasNextLine()) {
-            String country = fileScanner.nextLine();
-            Country c = new Country(country);
-            countryService.addCountry(c);
-        }
-        fileScanner.close();
+    public void run() {
         while (true) {
             displayMenu();
         }
@@ -58,6 +52,9 @@ public class ContestRunner {
                 10. Display all current entries from show
                 11. Add vote to current show
                 12. Display all seasons
+                13. Add a voting system
+                14. Remove voting system
+                15. Update voting system
                 """);
         int option = Integer.parseInt(scanner.nextLine());
         switch (option) {
@@ -74,6 +71,9 @@ public class ContestRunner {
             case 10-> displayCurrentEntriesFromShow();
             case 11-> addVoteToCurrentShow();
             case 12-> displayAllSeasons();
+            case 13-> addVotingSystem();
+            case 14-> removeVotingSystem();
+            case 15-> updateVotingSystem();
             default -> System.out.println("Invalid option");
         }
     }
@@ -126,20 +126,20 @@ public class ContestRunner {
             System.out.println("Enter number of qualifiers per semifinal:");
             qualifiersSemi = Integer.parseInt(scanner.nextLine());
         }
-        System.out.println("Enter voting system for semifinal(s) (numbers representing point totals separated by comma");
-        String[] pointTotals = scanner.nextLine().split(",");
-        ArrayList<Integer> votingSystemPoints = new ArrayList<>();
-        for (String s : pointTotals) {
-            votingSystemPoints.add(Integer.parseInt(s));
+        System.out.println("Enter voting system name for semifinal(s)");
+        String semifinal = scanner.nextLine();
+        VotingSystem votingSystemSemifinal = votingSystemService.getVotingSystemByName(semifinal);
+        if (votingSystemSemifinal == null) {
+            System.out.println("Voting system not found");
+            return;
         }
-        VotingSystem votingSystemSemifinal = new VotingSystem(votingSystemPoints);
-        System.out.println("Enter voting system for final (numbers representing point totals separated by comma");
-        pointTotals = scanner.nextLine().split(",");
-        votingSystemPoints.clear();
-        for (String s : pointTotals) {
-            votingSystemPoints.add(Integer.parseInt(s));
+        System.out.println("Enter voting system name for final");
+        String final_ = scanner.nextLine();
+        VotingSystem votingSystemFinal = votingSystemService.getVotingSystemByName(final_);
+        if (votingSystemFinal == null) {
+            System.out.println("Voting system not found");
+            return;
         }
-        VotingSystem votingSystemFinal = new VotingSystem(votingSystemPoints);
 
         Season season = new Season(seasonName, shows, votingSystemSemifinal, votingSystemFinal,
                 autoqualifiers, qualifiersSemi);
@@ -240,5 +240,49 @@ public class ContestRunner {
         for (Season season: seasons) {
             System.out.println(season);
         }
+    }
+
+    private void addVotingSystem() {
+        auditLogService.log("addVotingSystem");
+        System.out.println("Enter name for voting system");
+        String votingSystemName = scanner.nextLine();
+        System.out.println("Enter numbers for system (numbers representing point totals separated by comma");
+        String[] pointTotals = scanner.nextLine().split(",");
+        ArrayList<Integer> votingSystemPoints = new ArrayList<>();
+        for (String s : pointTotals) {
+            votingSystemPoints.add(Integer.parseInt(s));
+        }
+        VotingSystem votingSystem = new VotingSystem(votingSystemName, votingSystemPoints);
+        votingSystemService.addVotingSystem(votingSystem);
+    }
+
+    private void removeVotingSystem() {
+        auditLogService.log("removeVotingSystem");
+        System.out.println("Enter voting system name:");
+        String name = scanner.nextLine();
+        VotingSystem votingSystem = votingSystemService.getVotingSystemByName(name);
+        if (votingSystem == null) {
+            System.out.println("Voting system not found");
+            return;
+        }
+        votingSystemService.removeVotingSystem(votingSystem);
+    }
+
+    private void updateVotingSystem() {
+        auditLogService.log("updateVotingSystem");
+        System.out.println("Enter voting system name:");
+        String name = scanner.nextLine();
+        VotingSystem votingSystem = votingSystemService.getVotingSystemByName(name);
+        if (votingSystem == null) {
+            System.out.println("Voting system not found");
+            return;
+        }
+        System.out.println("Enter new numbers for system (numbers representing point totals separated by comma");
+        String[] pointTotals = scanner.nextLine().split(",");
+        ArrayList<Integer> votingSystemPoints = new ArrayList<>();
+        for (String s : pointTotals) {
+            votingSystemPoints.add(Integer.parseInt(s));
+        }
+        votingSystemService.updateVotingSystem(votingSystem, votingSystemPoints);
     }
 }
