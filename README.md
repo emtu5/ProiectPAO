@@ -31,5 +31,5 @@ Each user claims a country, then sends a song to represent that country. After t
 - [x] Display all seasons
 
 ## Stage 2
-- [ ] add JDBC functionality
+- [x] add JDBC functionality
 - [x] add audit log
