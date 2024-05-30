@@ -22,9 +22,6 @@ public class UserRepository implements IUserRepository {
             userStmt.setString(1, user.getUsername());
             userStmt.setString(2, user.getEmail());
             userStmt.executeUpdate();
-            conn.close();
-            userStmt.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
