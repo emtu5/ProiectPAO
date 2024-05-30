@@ -1,12 +1,24 @@
+DROP TABLE LiveShowEntry;
+DROP TABLE Entry;
+DROP TABLE Final_;
+DROP TABLE Semifinal;
+DROP TABLE LiveShow;
+DROP TABLE Season;
+DROP TABLE VotedCountry;
+DROP TABLE VotingSystem;
+DROP TABLE Vote;
+DROP TABLE Country;
+DROP TABLE User_;
+
 CREATE TABLE User_ (
 	user_id SERIAL PRIMARY KEY,
-	name VARCHAR(255) NOT NULL,
-	email VARCHAR(255) NOT NULL
+	name VARCHAR(255) UNIQUE NOT NULL,
+	email VARCHAR(255) UNIQUE NOT NULL
 
 );
 CREATE TABLE Country (
 	country_id SERIAL PRIMARY KEY,
-	name VARCHAR(255) NOT NULL
+	name VARCHAR(255) UNIQUE NOT NULL
 );
 CREATE TABLE Vote (
 	vote_id SERIAL PRIMARY KEY,
@@ -15,7 +27,7 @@ CREATE TABLE Vote (
 );
 CREATE TABLE VotingSystem (
 	votingsystem_id SERIAL PRIMARY KEY,
-	name VARCHAR(255) NOT NULL,
+	name VARCHAR(255) UNIQUE NOT NULL,
 	points INTEGER[] NOT NULL
 );
 CREATE TABLE VotedCountry (
@@ -34,7 +46,7 @@ CREATE TABLE Season (
 	autoqualifiers INTEGER,
 	qualifiers INTEGER,
 	currentshow INTEGER,
-	seasonstatus SeasonStatus NOT NULL,
+	seasonstatus SeasonStatus NOT NULL
 );
 CREATE TABLE LiveShow (
 	liveshow_id SERIAL PRIMARY KEY,
